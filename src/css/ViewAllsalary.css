@@ -1,0 +1,60 @@
+/* style.css - Global Styling for Salary Table UI */
+/* 
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+} */
+
+.container {
+  max-width: 960px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.salary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.salary-table th,
+.salary-table td {
+  border: 1px solid #ddd;
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.salary-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.salary-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.salary-table tbody tr:hover {
+  background-color: #eef;
+  transition: background-color 0.3s ease;
+}
+
+td.currency {
+  font-weight: 500;
+  color: #2e7d32; /* green */
+}
+
+td.deduction {
+  color: #c62828; /* red */
+}

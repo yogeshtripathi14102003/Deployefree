@@ -1,0 +1,53 @@
+.menu-button {
+  background-color: #007bff;
+  color: white;
+  /* padding: 8px 16px; */
+  margin: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  width:25px;
+}
+
+.dropdown-menu {
+  background-color: cadetblue;
+  border: 1px solid #ccc;
+  padding: 15px;
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  width: 250px;
+}
+
+.dropdown-menu .nav-link {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  color: #0088080;
+  text-decoration: none;
+}
+
+.dropdown-menu .nav-link span {
+  margin-left: 8px;
+}
+
+.nav-link.active {
+  font-weight: bold;
+  color: #0088080;
+}
+
+.welcome-text{
+    text-align: center;
+    /* margin-top:30px; */
+}
+
+
+.navbar{
+    padding-left:30px;
+}

@@ -1,0 +1,127 @@
+/* .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #008080;
+  padding: 15px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+} */
+
+/* .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #008080;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 40 80px;
+  z-index: 1000;
+}
+
+
+.navbar-logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: #dcdde1;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-item:hover {
+  color: #1e90ff;
+}
+
+.nav-item.active {
+  color: #00cec9;
+  font-weight: bold;
+}
+.navbtn{
+  
+} */
+
+/* Reset margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #008080;
+  color: #fff;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 240px; /* accounts for sidebar width */
+  right: 0;
+  z-index: 999;
+  transition: left 0.3s ease;
+}
+
+.navbar-logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbtn button {
+  padding: 0.5rem 1rem;
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.welcome-text {
+  font-size: 1rem;
+}
+
+/* Responsive (sidebar hidden or collapsed) */
+@media (max-width: 768px) {
+  .navbar {
+    left: 0;
+    padding-left: 60px;
+  }
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar {
+    left: 0;
+  }
+}
+

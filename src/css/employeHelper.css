@@ -1,0 +1,46 @@
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.action-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 14px;
+  flex: 1 1 auto;
+}
+
+.action-button.view {
+  background-color: #1c38d4;
+}
+.action-button.details {
+  background-color: blue;
+}
+
+.action-button.edit{
+    background-color:#008080;
+}
+.action-button.salary{
+    background-color:#1cd42a;
+}
+.action-button.leave {
+  background-color: red;
+}
+
+/* Responsive tweak */
+@media (max-width: 600px) {
+  .button-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .action-button {
+    width: 100%;
+    font-size: 16px;
+  }
+}

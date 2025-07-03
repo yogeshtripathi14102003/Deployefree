@@ -1,0 +1,98 @@
+/* FirstHomeComp.css */
+
+/* Container holding the video and overlay */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Fullscreen background video (or GIF/image if you swap tags) */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Overlay that slides up from the bottom */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+
+  /* start off-screen below */
+  transform: translateY(100%);
+  /* animate into place */
+  animation: slideUp 1s ease-out forwards;
+}
+
+/* Heading inside the overlay */
+.overlay h1 {
+  color: white;
+  font-size: 3rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+
+  /* optional fade-in after slide-up */
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 0.5s forwards;
+}
+
+/* Keyframes for sliding the overlay up */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Keyframes for fading in the heading */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-gif {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity:0.8;
+}
+
+.overlay {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  padding-top: 20%;
+}
+

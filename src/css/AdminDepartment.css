@@ -1,0 +1,44 @@
+.admin-department-wrapper {
+  padding: 20px;
+  marginLeft: '250px'
+}
+
+.admin-department-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-department-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.admin-department-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 6px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+  max-width: 300px;
+}
+
+.add-button {
+  padding: 8px 16px;
+  background-color: #0d9488; /* Tailwind's teal-600 */
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.add-button:hover {
+  background-color: #0f766e; /* Darker teal on hover */
+}
+

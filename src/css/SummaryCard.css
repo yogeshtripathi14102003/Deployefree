@@ -1,0 +1,33 @@
+.summary-card {
+  display: flex;
+  border-radius: 8px;
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-card-icon {
+  font-size: 1.75rem; /* roughly Tailwind's text-3xl */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0d9488; /* Tailwind's teal-600 */
+  color: white;
+  padding: 0 1rem;
+}
+
+.summary-card-content {
+  padding: 0.5rem 1rem;
+}
+
+.summary-card-text {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600;
+  margin: 0;
+}
+
+.summary-card-number {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700;
+  margin: 0;
+}

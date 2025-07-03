@@ -1,0 +1,221 @@
+/* FrontNavbar.css */
+
+.header {
+  background: transparent;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  border-bottom: 1px solid transparent;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Apply after scroll */
+.header.scrolled {
+  background: white;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-linkk {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+}
+
+.nav-linkk:hover {
+  color: #1d4ed8;
+}
+
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  right: 25%;
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  z-index: 2000;
+  border-radius: 8px;
+}
+
+.mega-column {
+  flex: 1;
+  margin-right: 20px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.mega-column:last-child {
+  margin-right: 0;
+}
+
+.mega-column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background-color: #2563eb;
+  border-radius: 2px;
+}
+
+.mega-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1e40af;
+}
+
+.mega-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mega-column li {
+  margin-bottom: 8px;
+}
+
+.mega-column a {
+  text-decoration: none;
+  color: #444;
+  display: block;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.mega-column a:hover {
+  color: #2563eb;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2563eb;
+  z-index: 3000;
+  padding: 8px;
+}
+
+/* Mobile View Mega Menu and Nav */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 280px;
+    background: white;
+    flex-direction: column;
+    padding: 80px 20px 40px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-out;
+    z-index: 2000;
+    gap: 10px;
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .nav.open {
+    right: 0;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .mega-menu {
+    position: static;
+    width: 100%;
+    flex-direction: column;
+    box-shadow: none;
+    border: none;
+    padding: 10px 0 0 10px;
+    margin-top: 10px;
+    border-left: 2px solid #dbeafe;
+  }
+
+  .mega-column {
+    margin-right: 0;
+    margin-bottom: 20px;
+    padding-left: 15px;
+  }
+
+  .mega-column:last-child {
+    margin-bottom: 0;
+  }
+
+  .mega-column::before {
+    display: none;
+  }
+
+  /* Background overlay */
+  .nav.open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background: rgba(0, 0, 0, 0.5); */
+    z-index: -1;
+  }
+}
+
+/* Animation for menu items */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 0.5;
+    transform: translateY(0);
+  }
+}
+
+.nav.open .nav-linkk {
+  animation: slideIn 0.3s ease forwards;
+  animation-delay: calc(0.1s * var(--i));
+}

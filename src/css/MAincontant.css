@@ -1,0 +1,15 @@
+.main-content {
+  margin-left: 250px; /* Match sidebar width */
+  padding: 20px;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+}

@@ -1,0 +1,42 @@
+.dashboard {
+  padding: 20px;
+}
+
+.welcome-text {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.tile {
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.tile:hover {
+  transform: translateY(-5px);
+}
+
+.icon {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+/* Color Styles */
+.tile-blue { background-color: #007acc; }
+.tile-green { background-color: #4caf50; }
+.tile-purple { background-color: #9c27b0; }
+.tile-orange { background-color: #ff9800; }
+.tile-yellow { background-color: #ffc107; color: #333; }

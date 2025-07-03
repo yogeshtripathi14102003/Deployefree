@@ -1,0 +1,60 @@
+.admin-department-header {
+  margin-bottom: 1rem;
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
+}
+
+.admin-department-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.admin-department-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1;
+  min-width: 200px;
+margin-left:10px;
+  
+}
+
+.leavebutton {
+  display: flex;
+  gap: 10px;
+}
+
+.leavebutton button {
+  padding: 8px 16px;
+  /* background-color: #e0e0e0; */
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.leavebutton button:hover {
+  background-color: #008080;
+}
+
+.buttonapprove{
+  background-color: #008000;
+}
+.buttonpending{
+  background-color: #FFFF00;
+}
+.buttonreject{
+  background-color: #FF0000;
+}
+

@@ -1,0 +1,27 @@
+.admin-summary {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-summary-heading {
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.summary-grid,
+.leave-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.leave-detail-wrapper {
+  margin-top: 2rem;
+}
+
+.leave-detail-title {
+  font-size: 20px;
+  margin-bottom: 1rem;
+  color: #555;
+}

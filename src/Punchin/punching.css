@@ -1,0 +1,64 @@
+.punch-container {
+  padding: 20px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.punch-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.punch-form input,
+.punch-form button {
+  padding: 8px;
+  font-size: 16px;
+}
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+  color: green;
+}
+
+.punch-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.punch-table th,
+.punch-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+
+
+.punch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.search-box {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 200px;
+  margin-right: auto;
+}
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.button-group button {
+  flex: 1;
+}

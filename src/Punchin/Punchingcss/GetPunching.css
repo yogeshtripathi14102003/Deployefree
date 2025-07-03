@@ -1,0 +1,27 @@
+.punching-table-container {
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.punching-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.punching-table th,
+.punching-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.punching-table th {
+  background-color: #4a4a7d;
+  color: white;
+}
+
+.punching-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
