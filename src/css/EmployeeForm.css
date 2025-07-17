@@ -69,3 +69,12 @@
 }
 
 }
+.add-field-button {
+  margin-top: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}

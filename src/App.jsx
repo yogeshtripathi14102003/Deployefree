@@ -30,6 +30,9 @@ import AllEmployee from "./emplyee/AllEmployee";
 import AddEmployeeSalary from "./Salary/AddEmployeeSalary";
 import GetallSalary from "./Salary/GetallSalary";
 import ViewAllSalary from "./Salary/ViewAllSalary";
+import AttendanceSheet from "./Punchin/AttendanceSheet";
+// import WageRegister from "./Punchin/WageRegisterTable";
+import WageRegister from "./Punchin/WageRegister ";
 // import Setting from "./EmployeeDashbord/Setting";
 function App() {
   return (
@@ -88,6 +91,12 @@ function App() {
             {" "}
           </Route>
           <Route path="/adminDashbord/salary/ViewAllSalary" element={<ViewAllSalary />}>
+            {" "}
+          </Route>
+           <Route path="/adminDashbord/salary/AttendanceSheet" element={<AttendanceSheet />}>
+            {" "}
+          </Route>
+          <Route path="/adminDashbord/salary/WageRegisterTable" element={<WageRegister />}>
             {" "}
           </Route>
           <Route

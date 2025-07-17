@@ -1,0 +1,38 @@
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.admin-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.admin-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background-color: #008080;
+  color: #fff;
+  transition: width 0.3s ease;
+  overflow-y: auto;
+}
+
+.admin-layout.sidebar-closed .admin-sidebar {
+  width: 70px;
+  min-width: 70px;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+  transition: all 0.3s ease;
+}
+
+/* ❌ REMOVE this line to avoid content shift */
+.admin-layout.sidebar-closed .admin-content {
+  /* margin-left: -170px; REMOVE this */
+}

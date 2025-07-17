@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/EmployeeForm.css";
-import "../css/allowance-form.css";
+// import "../css/allowance-form.css";
 import { fetchDepartments, getEmployees } from "../utils/EmployeeHelper";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -54,10 +54,6 @@ export default function AddEmployeeSalary() {
     }));
   };
 
-  const handleAddAllowance = () => {
-    setAllowances([...allowances, { name: "", amount: "" }]);
-  };
-
   const handleDeductionChange = (index, field, value) => {
     const updated = [...deductions];
     updated[index][field] = value;
@@ -68,64 +64,69 @@ export default function AddEmployeeSalary() {
     }));
   };
 
-  const handleAddDeduction = () => {
-    setDeductions([...deductions, { name: "", amount: "" }]);
+  const addAllowanceField = () => {
+    setAllowances((prev) => [...prev, { name: "", amount: "" }]);
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const totalAllowances = allowances.reduce(
-    (sum, item) => sum + Number(item.amount || 0),
-    0
-  );
-
-  const totalDeductions = deductions.reduce(
-    (sum, item) => sum + Number(item.amount || 0),
-    0
-  );
-
-  const payload = {
-    ...employee,
-    allowances: totalAllowances,
-    deductions: totalDeductions,
-    payDate: new Date().toISOString().split("T")[0],
+  const addDeductionField = () => {
+    setDeductions((prev) => [...prev, { name: "", amount: "" }]);
   };
 
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/salary/add", // ✅ corrected route
-      payload,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const totalAllowances = allowances.reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
     );
 
-    if (response.data.success) {
-      alert("Salary added successfully.");
-      navigate("/adminDashbord/employees");
-    } else {
-      alert("Failed to add salary.");
+    const totalDeductions = deductions.reduce(
+      (sum, item) => sum + Number(item.amount || 0),
+      0
+    );
+
+    const payload = {
+      ...employee,
+      allowances: totalAllowances,
+      deductions: totalDeductions,
+      payDate: new Date().toISOString().split("T")[0],
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/master/Addmaster",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Salary added successfully.");
+        navigate("/adminDashbord/salary/ViewAllSalary");
+      } else {
+        alert("Failed to add salary.");
+      }
+    } catch (error) {
+      console.error("Submit Error:", error);
+      const message =
+        error.response?.data?.error ||
+        "An error occurred while submitting the form.";
+      alert(message);
     }
-  } catch (error) {
-    console.error("Submit Error:", error);
-    const message =
-      error.response?.data?.error ||
-      "An error occurred while submitting the form.";
-    alert(message);
-  }
-};
+  };
 
   return (
     <>
       {departments ? (
         <div className="employee-form-card">
           <div className="employee-form-content">
-            <h2 className="employee-form-title">Add Master Salary Detail </h2>
+            <h2 className="employee-form-title">Add Master Salary Detail</h2>
             <form onSubmit={handleSubmit} className="employee-form">
+              {/* Department Dropdown */}
               <label>
                 Department
                 <select
@@ -143,6 +144,7 @@ export default function AddEmployeeSalary() {
                 </select>
               </label>
 
+              {/* Employee Dropdown */}
               <label>
                 Employee
                 <select
@@ -160,6 +162,7 @@ export default function AddEmployeeSalary() {
                 </select>
               </label>
 
+              {/* Basic Salary */}
               <label>
                 Basic Salary
                 <input
@@ -172,7 +175,7 @@ export default function AddEmployeeSalary() {
                 />
               </label>
 
-              {/* ------ Allowance Section ------ */}
+              {/* Allowances Section */}
               <div className="allowance-form">
                 <h3>EARNINGS & ALLOWANCES</h3>
                 {allowances.map((item, index) => (
@@ -189,7 +192,6 @@ export default function AddEmployeeSalary() {
                         required
                       />
                     </label>
-
                     <label>
                       Amount
                       <input
@@ -204,17 +206,16 @@ export default function AddEmployeeSalary() {
                     </label>
                   </div>
                 ))}
-
                 <button
                   type="button"
-                  onClick={handleAddAllowance}
-                  className="add-btn"
+                  onClick={addAllowanceField}
+                  className="add-field-button"
                 >
-                  + Add Allowance
+                  ➕ Add Allowance
                 </button>
               </div>
 
-              {/* ------ Deduction Section ------ */}
+              {/* Deductions Section */}
               <div className="allowance-form">
                 <h3>DEDUCTIONS</h3>
                 {deductions.map((item, index) => (
@@ -231,7 +232,6 @@ export default function AddEmployeeSalary() {
                         required
                       />
                     </label>
-
                     <label>
                       Amount
                       <input
@@ -246,13 +246,12 @@ export default function AddEmployeeSalary() {
                     </label>
                   </div>
                 ))}
-
                 <button
                   type="button"
-                  onClick={handleAddDeduction}
-                  className="add-btn"
+                  onClick={addDeductionField}
+                  className="add-field-button"
                 >
-                  + Add Deduction
+                  ➕ Add Deduction
                 </button>
               </div>
 

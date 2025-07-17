@@ -1,25 +1,27 @@
-import React from 'react'
-// import{useAuth} from '../Context/AuthContext ';
-import AdminSidebar from '../component/AdminSidebar';
-import Navbar from '../component/Navbar';
-//  import AdminSummary from '../component/AdminSummary';
-import { Outlet } from 'react-router-dom';
+import React, { useState } from "react";
+import AdminSidebar from "../component/AdminSidebar";
+import Navbar from "../component/Navbar";
+import '../css/AdminLayout.css';
+import { Outlet } from "react-router-dom";
+
 const AdminDashbord = () => {
-  // const {user,} = useAuth()
- 
- 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
-    <>
+    <div className={`admin-layout ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      <div className="admin-body">
+        <AdminSidebar isSidebarOpen={isSidebarOpen} />
+        <main className="admin-content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
 
-  <Navbar />
-
-      <AdminSidebar />
- 
-          {/* <AdminSummary />  */}
-      <Outlet />
-    
-    </>
-  )
-}
-
-export default AdminDashbord
+export default AdminDashbord;

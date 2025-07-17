@@ -15,6 +15,7 @@ export default function Add() {
     deductions: 0,
     allowanceDetails: [],
     deductionDetails: [],
+    halfDay: 0, // ✅ New field added
   });
 
   const [allowances, setAllowances] = useState([{ name: "", amount: "" }]);
@@ -48,7 +49,6 @@ export default function Add() {
     setEmployee((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ------ Allowance Logic ------
   const handleAllowanceChange = (index, field, value) => {
     const updated = [...allowances];
     updated[index][field] = value;
@@ -66,7 +66,6 @@ export default function Add() {
     setAllowances([...allowances, { name: "", amount: "" }]);
   };
 
-  // ------ Deduction Logic ------
   const handleDeductionChange = (index, field, value) => {
     const updated = [...deductions];
     updated[index][field] = value;
@@ -83,8 +82,6 @@ export default function Add() {
   const handleAddDeduction = () => {
     setDeductions([...deductions, { name: "", amount: "" }]);
   };
-
-  // -----------------------------
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,7 +165,20 @@ export default function Add() {
                   required
                 />
               </label>
-                    <label>
+
+              <label>
+                Half Days
+                <input
+                  type="number"
+                  name="halfDay"
+                  value={employee.halfDay}
+                  placeholder="Enter number of half days"
+                  onChange={handleChange}
+                  min="0"
+                />
+              </label>
+
+              <label>
                 Pay Date
                 <input
                   type="date"
@@ -179,8 +189,7 @@ export default function Add() {
                 />
               </label>
 
-
-              {/* ------ Allowance Section ------ */}
+              {/* Allowance Section */}
               <div className="allowance-form">
                 <h3>EARNINGS & ALLOWANCES</h3>
                 {allowances.map((item, index) => (
@@ -232,7 +241,7 @@ export default function Add() {
                 </label>
               </div>
 
-              {/* ------ Deduction Section ------ */}
+              {/* Deduction Section */}
               <div className="allowance-form">
                 <h3>DEDUCTIONS</h3>
                 {deductions.map((item, index) => (
@@ -284,9 +293,6 @@ export default function Add() {
                 </label>
               </div>
 
-              {/* -------------------------------- */}
-
-        
               <div className="button-group">
                 <button type="submit" className="employee-submit-button">
                   Add Salary

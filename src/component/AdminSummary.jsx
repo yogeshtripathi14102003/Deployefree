@@ -20,22 +20,26 @@ const AdminSummary = () => {
     const fetchSummary = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/v1/dashboard/summary",
+          "http://localhost:5000/v1/dashbord/summary",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json",
             },
-            withCredentials: false, // Typically fine for token-based auth :contentReference[oaicite:1]{index=1}
+            withCredentials: false,
           }
         );
-        setSummary(response.data);
+
+        const responseData = response.data;
+        console.log("SUMMARY RESPONSE:", responseData); // Debug log
+        setSummary(responseData);
       } catch (err) {
         const msg = err.response?.data?.error || err.message || "Fetch failed";
         setError(msg);
         console.error("Error fetching summary:", err);
       }
     };
+
     fetchSummary();
   }, []);
 
@@ -56,17 +60,17 @@ const AdminSummary = () => {
         <SummaryCard
           icon={<FaUsers />}
           text="Total Employees"
-          number={summary.totalEmployees}
+          number={summary.totalEmployeesCount || 0}
         />
         <SummaryCard
           icon={<FaBuilding />}
           text="Total Departments"
-          number={summary.totalDepartments}
+          number={summary.totalDepartmentsCount || 0}
         />
         <SummaryCard
           icon={<PiHandDeposit />}
           text="Monthly Pay"
-          number={summary.totalSalaries || summary.totalSalary}
+          number={summary.totalSalaryAmount || 0}
         />
       </div>
 
@@ -76,22 +80,22 @@ const AdminSummary = () => {
           <SummaryCard
             icon={<GiThreeLeaves />}
             text="Leave Applied"
-            number={summary.leaveApplied}
+            number={summary.totalLeaveRequests || 0}
           />
           <SummaryCard
             icon={<FcApprove />}
             text="Leave Approved"
-            number={summary.leaveApproved}
+            number={summary.totalApprovedLeaves || 0}
           />
           <SummaryCard
             icon={<FaHourglass />}
             text="Leave Pending"
-            number={summary.leavePending}
+            number={summary.totalPendingLeaves || 0}
           />
           <SummaryCard
             icon={<FaTimesCircle />}
             text="Leave Rejected"
-            number={summary.leaveRejected}
+            number={summary.totalRejectedLeaves || 0}
           />
         </div>
       </div>

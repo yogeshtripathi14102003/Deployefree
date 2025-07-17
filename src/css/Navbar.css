@@ -60,8 +60,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .navbar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,10 +71,15 @@
   height: 60px;
   position: fixed;
   top: 0;
-  left: 240px; /* accounts for sidebar width */
+  left: 0;
   right: 0;
   z-index: 999;
-  transition: left 0.3s ease;
+  transition: padding-left 0.3s ease;
+}
+
+/* Add padding-left to account for the sidebar width */
+.navbar.sidebar-open {
+  padding-left: 240px; /* only when sidebar is open */
 }
 
 .navbar-logo {
@@ -101,27 +106,39 @@
   font-size: 1rem;
 }
 
-/* Responsive (sidebar hidden or collapsed) */
-@media (max-width: 768px) {
-  .navbar {
-    left: 0;
-    padding-left: 60px;
-  }
-}
-
 .menu-toggle {
   display: none;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
+/* Responsive: show toggle icon and remove sidebar padding */
 @media (max-width: 768px) {
+  .navbar {
+    padding-left: 60px;
+  }
+
+  .navbar.sidebar-open {
+    padding-left: 60px;
+  }
+
   .menu-toggle {
     display: block;
   }
-
-  .navbar {
-    left: 0;
+}
+/* Only hide on large screens if needed */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: flex !important; /* or block */
   }
 }
 
+/* Navbar.css */
+.menu-toggle {
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}

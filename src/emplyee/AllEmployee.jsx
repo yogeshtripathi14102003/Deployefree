@@ -60,11 +60,12 @@ const AllEmployee = () => {
           <div className="employee-row"><p className="label">Role:</p><p className="value">{employee.userId?.role}</p></div>
           <div className="employee-row"><p className="label">Employee ID:</p><p className="value">{employee.employeeId}</p></div>
           <div className="employee-row"><p className="label">Date of Birth:</p><p className="value">{new Date(employee.dob).toLocaleDateString()}</p></div>
+           <div className="employee-row"><p className="label">DOJ:</p><p className="value">{new Date(employee.doj).toLocaleDateString()}</p></div>
           <div className="employee-row"><p className="label">Gender:</p><p className="value">{employee.gender}</p></div>
           <div className="employee-row"><p className="label">Marital Status:</p><p className="value">{employee.maritalStatus}</p></div>
           <div className="employee-row"><p className="label">Department:</p><p className="value">{employee.department?.dep_name}</p></div>
           <div className="employee-row"><p className="label">Designation:</p><p className="value">{employee.designation}</p></div>
-          <div className="employee-row"><p className="label">Salary:</p><p className="value">{employee.salary}</p></div>
+
           <div className="employee-row"><p className="label">Address:</p><p className="value">{employee.address}</p></div>
           <div className="employee-row"><p className="label">PAN:</p><p className="value">{employee.PAN}</p></div>
           <div className="employee-row"><p className="label">Aadhar:</p><p className="value">{employee.Aadhar}</p></div>

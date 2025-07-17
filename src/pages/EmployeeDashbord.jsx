@@ -1,25 +1,26 @@
-import React from "react";
-// import '../css/MAincontant.css'
-//  import AdminSummary from '../component/AdminSummary';
+import React, { useState } from "react";
+import EmployeeSidebar from "../EmployeeDashbord/EmployeeSidebar";
+import UserNAvbar from "../component/UserNAvbar";
+import '../css/AdminLayout.css';
 import { Outlet } from "react-router-dom";
 
-// import Normal from "../EmployeeDashbord/Normal";
-import UserNAvbar from "../component/UserNAvbar";
-// import EmployeeSidebar from "../EmployeeDashbord/EmployeeSidebar";
-
 const EmployeeDashbord = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
-    <>
-      <UserNAvbar />
-
-      {/* <EmployeeSidebar /> */}
-      {/* <div className="main-content">
-  <Normal />
-</div> */}
-
-      {/* <AdminSummary />  */}
-      <Outlet />
-    </>
+    <div className={`admin-layout ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
+      <UserNAvbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      <div className="admin-body">
+        <EmployeeSidebar isSidebarOpen={isSidebarOpen} />
+        <main className="admin-content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 };
 

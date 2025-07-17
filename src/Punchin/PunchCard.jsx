@@ -295,7 +295,7 @@ const styles = {
     alignItems: "center",
   },
   modal: {
-    background: "#fff",
+    background: "blue",
     padding: "2rem",
     borderRadius: "12px",
     boxShadow: "0 2px 10px rgba(0,0,0,0.3)",

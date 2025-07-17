@@ -14,7 +14,7 @@ export default function GetallSalary() {
     deductionDetails: [],
     totalDays: "",
     totalOvertime: "",
-    totalSiteDays: "", // ✅ NEW FIELD
+    totalSiteDays: "",
   });
 
   const [allowances, setAllowances] = useState([{ name: "", amount: "" }]);
@@ -42,10 +42,9 @@ export default function GetallSalary() {
     const employeeId = e.target.value;
     setEmployee((prev) => ({ ...prev, employeeId }));
 
-    // 👉 Fetch punch data
     try {
-      const response = await axios.get(
-        `http://localhost:5000/v1/punch?employeeId=${employeeId}`,
+      const punchResponse = await axios.get(
+        `http://localhost:5000/v1/punch/getalldetailbyemp/${employeeId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -53,17 +52,64 @@ export default function GetallSalary() {
         }
       );
 
-      const { totalDays, totalOvertime, totalSiteDays } = response.data;
+      const { summary } = punchResponse.data || {};
+      const punchData = {
+        totalDays: summary?.totalDaysPresent || 0,
+        totalOvertime: parseFloat(summary?.overtimeHours || "0"),
+        totalSiteDays: summary?.totalOutsideDays || 0,
+      };
 
       setEmployee((prev) => ({
         ...prev,
-        totalDays: totalDays || 0,
-        totalOvertime: totalOvertime || 0,
-        totalSiteDays: totalSiteDays || 0, // ✅ NEW DATA
+        ...punchData,
       }));
+
+      const salaryResponse = await axios.get(
+        `http://localhost:5000/api/v1/master/getovrby/${employeeId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      const salaryData = salaryResponse.data.data || salaryResponse.data;
+
+      const transformedAllowances = (salaryData.allowanceDetails || []).map((a) => ({
+        name: a.name,
+        amount: a.amount.toString(),
+      }));
+
+      const transformedDeductions = (salaryData.deductionDetails || []).map((d) => ({
+        name: d.name,
+        amount: d.amount.toString(),
+      }));
+
+      setEmployee((prev) => ({
+        ...prev,
+        basicSalary: salaryData.basicSalary?.toString() || "",
+        allowanceDetails: transformedAllowances,
+        deductionDetails: transformedDeductions,
+      }));
+
+      setAllowances(transformedAllowances.length ? transformedAllowances : [{ name: "", amount: "" }]);
+      setDeductions(transformedDeductions.length ? transformedDeductions : [{ name: "", amount: "" }]);
+
     } catch (error) {
-      console.error("Error fetching punch data:", error);
-      alert("Failed to load punch data.");
+      console.error("Fetch error:", error);
+      if (error.response?.status === 404) {
+        setEmployee((prev) => ({
+          ...prev,
+          basicSalary: "",
+          allowanceDetails: [],
+          deductionDetails: [],
+        }));
+        setAllowances([{ name: "", amount: "" }]);
+        setDeductions([{ name: "", amount: "" }]);
+        alert("No salary record found. You can now enter salary details.");
+      } else {
+        alert("Data fetch error: " + (error.response?.data?.error || error.message));
+      }
     }
   };
 
@@ -92,10 +138,45 @@ export default function GetallSalary() {
     }));
   };
 
+  const addAllowance = () => {
+    setAllowances([...allowances, { name: "", amount: "" }]);
+  };
+
+  const removeAllowance = (index) => {
+    const updated = [...allowances];
+    updated.splice(index, 1);
+    setAllowances(updated);
+    setEmployee((prev) => ({
+      ...prev,
+      allowanceDetails: updated,
+    }));
+  };
+
+  const addDeduction = () => {
+    setDeductions([...deductions, { name: "", amount: "" }]);
+  };
+
+  const removeDeduction = (index) => {
+    const updated = [...deductions];
+    updated.splice(index, 1);
+    setDeductions(updated);
+    setEmployee((prev) => ({
+      ...prev,
+      deductionDetails: updated,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const totalAllowances = allowances.reduce(
+    const WORKING_DAYS_IN_MONTH = 30;
+    const payableBasicSalary =
+      (Number(employee.basicSalary || 0) / WORKING_DAYS_IN_MONTH) *
+      Number(employee.totalDays || 0);
+
+    const updatedAllowances = [...allowances];
+
+    const totalAllowances = updatedAllowances.reduce(
       (sum, item) => sum + Number(item.amount || 0),
       0
     );
@@ -105,10 +186,17 @@ export default function GetallSalary() {
       0
     );
 
+    const grossSalary = payableBasicSalary + totalAllowances;
+    const netSalary = grossSalary - totalDeductions;
+
     const payload = {
       ...employee,
+      basicSalary: payableBasicSalary.toFixed(2),
+      allowanceDetails: updatedAllowances,
+      deductionDetails: deductions,
       allowances: totalAllowances,
       deductions: totalDeductions,
+      netSalary: netSalary.toFixed(2),
       payDate: new Date().toISOString().split("T")[0],
     };
 
@@ -144,7 +232,7 @@ export default function GetallSalary() {
       {departments ? (
         <div className="employee-form-card">
           <div className="employee-form-content">
-            <h2 className="employee-form-title">Add Salary</h2>
+            <h2 className="employee-form-title">Add Final Salary</h2>
             <form onSubmit={handleSubmit} className="employee-form">
               <label>
                 Department
@@ -181,20 +269,35 @@ export default function GetallSalary() {
               </label>
 
               <label>
-                Basic Salary
+                Monthly Basic Salary
                 <input
                   type="number"
                   name="basicSalary"
                   value={employee.basicSalary}
-                  placeholder="Enter basic salary amount"
                   onChange={handleChange}
+                  placeholder="Enter basic salary"
                   required
                 />
               </label>
 
-              {/* ✅ Total Days */}
               <label>
-                Total Days
+                Payable Basic Salary (auto)
+                <input
+                  type="number"
+                  readOnly
+                  value={
+                    employee.totalDays
+                      ? (
+                          (Number(employee.basicSalary || 0) / 30) *
+                          Number(employee.totalDays)
+                        ).toFixed(2)
+                      : "0"
+                  }
+                />
+              </label>
+
+              <label>
+                Total Present Days
                 <input
                   type="number"
                   name="totalDays"
@@ -203,18 +306,6 @@ export default function GetallSalary() {
                 />
               </label>
 
-              {/* ✅ Total Overtime */}
-              <label>
-                Total Overtime (Hours)
-                <input
-                  type="number"
-                  name="totalOvertime"
-                  value={employee.totalOvertime}
-                  readOnly
-                />
-              </label>
-
-              {/* ✅ Total Site Days */}
               <label>
                 Total Site Days
                 <input
@@ -225,7 +316,30 @@ export default function GetallSalary() {
                 />
               </label>
 
-              {/* ------ Allowance Section ------ */}
+              <label>
+                Total Overtime (Hours)
+                <input
+                  type="number"
+                  name="totalOvertime"
+                  value={employee.totalOvertime}
+                  readOnly
+                />
+              </label>
+
+              <label>
+                Net Payable Salary (after all)
+                <input
+                  type="number"
+                  readOnly
+                  value={(
+                    ((Number(employee.basicSalary || 0) / 30) * Number(employee.totalDays)) +
+                    allowances.reduce((sum, a) => sum + Number(a.amount || 0), 0) -
+                    deductions.reduce((sum, d) => sum + Number(d.amount || 0), 0)
+                  ).toFixed(2)}
+                />
+              </label>
+
+              {/* ALLOWANCES */}
               <div className="allowance-form">
                 <h3>EARNINGS & ALLOWANCES</h3>
                 {allowances.map((item, index) => (
@@ -234,7 +348,6 @@ export default function GetallSalary() {
                       Allowance Name
                       <input
                         type="text"
-                        placeholder="Allowance"
                         value={item.name}
                         onChange={(e) =>
                           handleAllowanceChange(index, "name", e.target.value)
@@ -242,12 +355,10 @@ export default function GetallSalary() {
                         required
                       />
                     </label>
-
                     <label>
                       Amount
                       <input
                         type="number"
-                        placeholder="Enter amount"
                         value={item.amount}
                         onChange={(e) =>
                           handleAllowanceChange(index, "amount", e.target.value)
@@ -255,11 +366,15 @@ export default function GetallSalary() {
                         required
                       />
                     </label>
+                    {allowances.length > 1 && (
+                      <button type="button" onClick={() => removeAllowance(index)}>❌</button>
+                    )}
                   </div>
                 ))}
+                <button type="button" onClick={addAllowance}>➕ Add Allowance</button>
               </div>
 
-              {/* ------ Deduction Section ------ */}
+              {/* DEDUCTIONS */}
               <div className="allowance-form">
                 <h3>DEDUCTIONS</h3>
                 {deductions.map((item, index) => (
@@ -268,7 +383,6 @@ export default function GetallSalary() {
                       Deduction Name
                       <input
                         type="text"
-                        placeholder="Deduction"
                         value={item.name}
                         onChange={(e) =>
                           handleDeductionChange(index, "name", e.target.value)
@@ -276,12 +390,10 @@ export default function GetallSalary() {
                         required
                       />
                     </label>
-
                     <label>
                       Amount
                       <input
                         type="number"
-                        placeholder="Enter amount"
                         value={item.amount}
                         onChange={(e) =>
                           handleDeductionChange(index, "amount", e.target.value)
@@ -289,8 +401,12 @@ export default function GetallSalary() {
                         required
                       />
                     </label>
+                    {deductions.length > 1 && (
+                      <button type="button" onClick={() => removeDeduction(index)}>❌</button>
+                    )}
                   </div>
                 ))}
+                <button type="button" onClick={addDeduction}>➕ Add Deduction</button>
               </div>
 
               <div className="button-group">

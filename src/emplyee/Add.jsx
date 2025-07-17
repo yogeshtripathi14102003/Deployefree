@@ -11,17 +11,17 @@ export default function Add() {
     email: "",
     employeeId: "",
     dob: "",
+    doj: "", // ✅ Correct key for DOJ
     gender: "",
     maritalStatus: "",
     designation: "",
     department: "",
-    salary: "",
     password: "",
-    PAN:"",
+    PAN: "",
     Aadhar: "",
     address: "",
-    uan:"",
-    pfno:"",
+    uan: "",
+    pfno: "",
     bankAccount: "",
     bankName: "",
     role: "",
@@ -93,11 +93,24 @@ export default function Add() {
     <div className="employee-form-card">
       <div className="employee-form-content">
         <h2 className="employee-form-title">Add an Employee</h2>
-        <form onSubmit={handleSubmit} className="employee-form" encType="multipart/form-data">
+        <form
+          onSubmit={handleSubmit}
+          className="employee-form"
+          encType="multipart/form-data"
+        >
           <input type="text" name="name" placeholder="Name" onChange={handleChange} required />
           <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
           <input type="text" name="employeeId" placeholder="Employee ID" onChange={handleChange} required />
-          <input type="date" name="dob" onChange={handleChange} required />
+          
+          <label>
+            DOB:
+            <input type="date" name="dob" onChange={handleChange} required />
+          </label>
+
+          <label>
+            DOJ:
+            <input type="date" name="doj" onChange={handleChange} required />
+          </label>
 
           <select name="gender" onChange={handleChange} required>
             <option value="">Select Gender</option>
@@ -122,17 +135,14 @@ export default function Add() {
           </select>
 
           <input type="text" name="designation" placeholder="Designation" onChange={handleChange} required />
-          <input type="number" name="salary" placeholder="Salary" onChange={handleChange} required />
           <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
-              <input type="text" name="address" placeholder="address" onChange={handleChange} required />
-          
+          <input type="text" name="address" placeholder="Address" onChange={handleChange} required />
           <input type="number" name="Aadhar" placeholder="Aadhar" onChange={handleChange} required />
-          <input type="number" name="uan" placeholder="uan" onChange={handleChange} required />
-          <input type="number" name="pfno" placeholder="pfno" onChange={handleChange} required />
+          <input type="number" name="uan" placeholder="UAN" onChange={handleChange} required />
+          <input type="number" name="pfno" placeholder="PF Number" onChange={handleChange} required />
           <input type="text" name="PAN" placeholder="PAN" onChange={handleChange} required />
-          <input type="number" name="bankAccount" placeholder="bankAccount" onChange={handleChange} required />
-          <input type="text" name="bankName" placeholder="bankname" onChange={handleChange} required />
-
+          <input type="number" name="bankAccount" placeholder="Bank Account" onChange={handleChange} required />
+          <input type="text" name="bankName" placeholder="Bank Name" onChange={handleChange} required />
 
           <select name="role" onChange={handleChange} required>
             <option value="">Select Role</option>

@@ -67,10 +67,7 @@ const View = () => {
                 <p className="label">Marital Status:</p>
                 <p className="value">{employee.maritalStatus}</p>
               </div>
-              <div className="employee-row">
-                <p className="label">Salary:</p>
-                <p className="value">{employee.salary}</p>
-              </div>
+              
             </div>
           </div>
         </div>
